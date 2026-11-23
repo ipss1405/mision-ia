@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Diagnóstico | Misión IA</title>
+
+    <link rel="stylesheet"
+          href="/css/app.css">
+</head>
+
+<body>
+
+    <main class="diagnostico-layout">
+
+        <div class="diagnostico-velo" aria-hidden="true"></div>
+
+        <header class="diagnostico-cabecera">
+            <div class="cabecera-navegacion">
+                <a class="enlace-inicio" href="/">← Inicio</a>
+                <h1>Misión IA · Diagnóstico</h1>
+            </div>
+            <div class="diagnostico-marcador">
+                <div class="diagnostico-metricas" aria-label="Marcador" role="group" aria-live="polite" aria-atomic="true">
+                    <span>Puntaje <strong id="puntajeDiagnostico">0</strong><span id="maximoDiagnostico"></span></span>
+                    <span>Racha <strong id="rachaDiagnostico">x0</strong></span>
+                </div>
+                <div class="diagnostico-progreso">
+                    <span>Progreso</span>
+                    <span id="progresoDiagnostico" class="mision-progreso" role="img" aria-label="Ninguna misión completada"></span>
+                </div>
+            </div>
+        </header>
+
+        <section class="mision-panel" aria-labelledby="tituloMision">
+            <div class="mision-card">
+                <div class="mision-apertura">
+                    <div class="mision-introduccion">
+                        <p id="tituloMision" role="status">Cargando misiones…</p>
+                    </div>
+                    <aside class="mision-nia" aria-label="Asistente de Misión IA" hidden>
+                        <div class="mision-nia-texto">
+                            <div class="nia-message"></div>
+                            <button type="button" id="btnEscucharNia" class="btn-voz-nia">
+                                <span aria-hidden="true">🔊</span> Escuchar a NIA
+                            </button>
+                        </div>
+                        <div class="nia-personaje">
+                            <img src="/img/nia.png" alt="NIA, asistente virtual de Misión IA">
+                        </div>
+                    </aside>
+                </div>
+                <div class="mision-contenido"></div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT DE NIA -->
+    <script src="/js/nia-estados.js"></script>
+    <script src="/js/nia-voz.js"></script>
+
+    <!-- JAVASCRIPT DEL DIAGNÓSTICO -->
+    <script src="/js/perfil-datos.js"></script>
+    <script src="/js/diagnostico.js"></script>
+
+</body>
+
+</html>

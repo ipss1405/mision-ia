@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ruta personalizada | Misión IA</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <script src="/js/nia-voz.js" defer></script>
+    <script src="/js/perfil-datos.js" defer></script>
+    <script src="/js/ruta.js" defer></script>
+</head>
+<body>
+    <main class="perfil-layout" aria-labelledby="tituloRuta">
+        <header class="perfil-cabecera">
+            <div class="cabecera-navegacion">
+                <a class="enlace-inicio" href="/">← Inicio</a>
+                <p class="eyebrow">Misión IA · Fortalecimiento</p>
+            </div>
+            <h1 id="tituloRuta">Tu ruta personalizada</h1>
+            <p>Esta ruta te muestra qué habilidad puedes fortalecer según tu resultado y te entrega recomendaciones para seguir desarrollándola.</p>
+        </header>
+
+        <section class="perfil-panel perfil-sin-resultados" id="rutaSinResultados" aria-labelledby="tituloRutaSinResultados">
+            <h2 id="tituloRutaSinResultados">Aún necesitamos conocer tu perfil antes de preparar una ruta.</h2>
+            <a class="btn-primary" href="/diagnostico">Realizar diagnóstico</a>
+        </section>
+
+        <div class="ruta-contenido" id="rutaResultados" hidden>
+            <section class="perfil-panel ruta-recorrido" aria-labelledby="rutaPrioridad">
+                <p class="eyebrow" id="rutaTipo">Prioridad detectada</p>
+                <h2 id="rutaPrioridad"></h2>
+                <p class="ruta-dato"><strong>Aciertos del diagnóstico:</strong> <span id="rutaResultadoGeneral"></span></p>
+                <p class="ruta-dato"><strong id="rutaEtiquetaIndicador"></strong> <span id="rutaIndicador"></span></p>
+                <section class="ruta-orientacion" id="rutaOrientacion" aria-labelledby="tituloRutaOrientacion" hidden>
+                    <h3 id="tituloRutaOrientacion">¿Qué debes fortalecer?</h3>
+                    <p id="rutaDescripcionHabilidad"></p>
+                </section>
+                <ol class="ruta-recomendaciones" id="rutaRecomendaciones" role="list" aria-label="Recomendaciones de práctica"></ol>
+            </section>
+
+            <div class="perfil-lateral">
+                <section class="perfil-panel perfil-nia ruta-nia" aria-labelledby="tituloNiaRuta">
+                    <div>
+                        <h2 id="tituloNiaRuta">Tu ruta con NIA</h2>
+                        <p id="rutaMensajeNia"></p>
+                        <p id="rutaGuiaNia">Puedes aplicar estas sugerencias por tu cuenta en tus estudios o en situaciones cotidianas.</p>
+                        <button class="perfil-voz" id="rutaEscucharNia" type="button" hidden>
+                            <span aria-hidden="true">🔊&nbsp;</span> Escuchar a NIA
+                        </button>
+                    </div>
+                    <img src="/img/nia-pensando.png" alt="NIA, asistente virtual de Misión IA">
+                </section>
+
+                <section class="perfil-panel ruta-resumen" aria-labelledby="tituloResumenRuta">
+                    <h2 id="tituloResumenRuta">Resumen del perfil</h2>
+                    <dl>
+                        <div><dt>Fortaleza inicial</dt><dd id="rutaFortaleza"></dd></div>
+                        <div><dt>Prioridad de fortalecimiento</dt><dd id="rutaPrioridadResumen"></dd></div>
+                    </dl>
+                    <a class="perfil-revisar" href="/perfil">← Volver a mi perfil</a>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

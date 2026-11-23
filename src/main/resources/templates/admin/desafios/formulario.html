@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulario de desafío | Misión IA</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="admin-layout admin-layout-formulario" aria-labelledby="tituloAdmin">
+    <header class="admin-cabecera">
+        <div>
+            <p class="eyebrow">Misión IA · Administración</p>
+            <h1 id="tituloAdmin" th:text="${idEdicion == null} ? 'Nuevo desafío' : 'Editar desafío'"></h1>
+        </div>
+        <a class="admin-boton" th:href="@{/admin/desafios}">← Banco de desafíos</a>
+    </header>
+
+    <form class="admin-panel admin-formulario" method="post" th:object="${desafio}"
+          th:action="${idEdicion == null} ? @{/admin/desafios} : @{/admin/desafios/{id}(id=${idEdicion})}">
+        <p class="admin-aviso admin-error" role="alert" th:if="${#fields.hasAnyErrors()}">
+            Revisa los campos señalados antes de guardar.
+        </p>
+        <div class="admin-campo">
+            <label for="titulo">Título</label>
+            <input type="text" th:field="*{titulo}" maxlength="160" required>
+            <small class="admin-error" th:errors="*{titulo}"></small>
+        </div>
+        <div class="admin-campo">
+            <label for="enunciado">Enunciado</label>
+            <textarea th:field="*{enunciado}" maxlength="5000" rows="5" required aria-describedby="ayudaEnunciado"></textarea>
+            <small id="ayudaEnunciado">Separa la situación, las citas y la pregunta con líneas en blanco. En la misión 6 conserva los párrafos «Texto original:» y «Resumen de IA:».</small>
+            <small class="admin-error" th:errors="*{enunciado}"></small>
+        </div>
+
+        <fieldset class="admin-seccion">
+            <legend>Alternativas</legend>
+            <p class="admin-ayuda">Puedes separar el título de la explicación con « - ». Los cuatro fragmentos de la misión 5 se muestran como texto completo.</p>
+            <div class="admin-campos">
+                <div class="admin-campo">
+                    <label for="opcionA">Opción A</label>
+                    <textarea th:field="*{opcionA}" maxlength="1000" rows="2" required></textarea>
+                    <small class="admin-error" th:errors="*{opcionA}"></small>
+                </div>
+                <div class="admin-campo">
+                    <label for="opcionB">Opción B</label>
+                    <textarea th:field="*{opcionB}" maxlength="1000" rows="2" required></textarea>
+                    <small class="admin-error" th:errors="*{opcionB}"></small>
+                </div>
+                <div class="admin-campo">
+                    <label for="opcionC">Opción C (opcional)</label>
+                    <textarea th:field="*{opcionC}" maxlength="1000" rows="2"></textarea>
+                    <small class="admin-error" th:errors="*{opcionC}"></small>
+                </div>
+                <div class="admin-campo">
+                    <label for="opcionD">Opción D (opcional)</label>
+                    <textarea th:field="*{opcionD}" maxlength="1000" rows="2"></textarea>
+                    <small class="admin-error" th:errors="*{opcionD}"></small>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="admin-seccion">
+            <legend>Publicación</legend>
+            <div class="admin-campos">
+                <div class="admin-campo">
+                    <label for="publicadoDiagnostico">Publicado en diagnóstico</label>
+                    <select th:field="*{publicadoDiagnostico}">
+                        <option value="false">No</option>
+                        <option value="true">Sí</option>
+                    </select>
+                    <small class="admin-error" th:errors="*{publicadoDiagnostico}"></small>
+                </div>
+                <div class="admin-campo">
+                    <label for="ordenDiagnostico">Orden en diagnóstico</label>
+                    <input type="number" th:field="*{ordenDiagnostico}" min="1" step="1" aria-describedby="ayudaOrden">
+                    <small id="ayudaOrden">Obligatorio para publicar. Desactivar conserva el orden original y retira el desafío de los nuevos intentos.</small>
+                    <small class="admin-error" th:errors="*{ordenDiagnostico}"></small>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="admin-campo">
+            <label for="mensajeNia">Mensaje de NIA antes de responder (opcional)</label>
+            <textarea th:field="*{mensajeNia}" maxlength="500" rows="2"></textarea>
+            <small class="admin-error" th:errors="*{mensajeNia}"></small>
+        </div>
+
+        <div class="admin-campos">
+            <div class="admin-campo">
+                <label for="respuestaCorrecta">Respuesta correcta</label>
+                <select th:field="*{respuestaCorrecta}" required>
+                    <option value="">Selecciona una alternativa</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+                <small class="admin-error" th:errors="*{respuestaCorrecta}"></small>
+                <small class="admin-error" th:errors="*{respuestaDisponible}"></small>
+            </div>
+            <div class="admin-campo">
+                <label for="puntajeJuego">Puntaje del juego</label>
+                <input type="number" th:field="*{puntajeJuego}" min="1" max="2147483647" required>
+                <small class="admin-error" th:errors="*{puntajeJuego}"></small>
+            </div>
+            <div class="admin-campo">
+                <label for="habilidadPrincipal">Habilidad principal</label>
+                <select th:field="*{habilidadPrincipal}" required>
+                    <option value="">Selecciona una habilidad</option>
+                    <option th:each="habilidad : ${habilidades}" th:value="${habilidad.name()}"
+                            th:text="${habilidad.etiqueta}"></option>
+                </select>
+                <small class="admin-error" th:errors="*{habilidadPrincipal}"></small>
+            </div>
+            <div class="admin-campo">
+                <label for="habilidadSecundaria">Habilidad secundaria (opcional)</label>
+                <select th:field="*{habilidadSecundaria}">
+                    <option value="">Sin habilidad secundaria</option>
+                    <option th:each="habilidad : ${habilidades}" th:value="${habilidad.name()}"
+                            th:text="${habilidad.etiqueta}"></option>
+                </select>
+                <small class="admin-error" th:errors="*{habilidadSecundaria}"></small>
+            </div>
+            <div class="admin-campo">
+                <label for="feedbackCorrecto">Feedback correcto</label>
+                <textarea th:field="*{feedbackCorrecto}" maxlength="2000" rows="3"></textarea>
+                <small class="admin-error" th:errors="*{feedbackCorrecto}"></small>
+            </div>
+            <div class="admin-campo">
+                <label for="feedbackIncorrecto">Feedback incorrecto</label>
+                <textarea th:field="*{feedbackIncorrecto}" maxlength="2000" rows="3"></textarea>
+                <small class="admin-error" th:errors="*{feedbackIncorrecto}"></small>
+            </div>
+        </div>
+        <div class="admin-acciones">
+            <button class="btn-primary" type="submit" th:text="${idEdicion == null} ? 'Crear desafío' : 'Guardar cambios'"></button>
+            <a class="admin-boton" th:href="@{/admin/desafios}">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

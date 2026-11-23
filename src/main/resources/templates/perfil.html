@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Perfil inicial | Misión IA</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <script src="/js/nia-voz.js" defer></script>
+    <script src="/js/perfil-datos.js" defer></script>
+    <script src="/js/perfil.js" defer></script>
+</head>
+<body>
+    <main class="perfil-layout" aria-labelledby="tituloPerfil">
+        <header class="perfil-cabecera">
+            <div class="cabecera-navegacion">
+                <a class="enlace-inicio" href="/">← Inicio</a>
+                <p class="eyebrow">Misión IA · Diagnóstico</p>
+            </div>
+            <h1 id="tituloPerfil">Tu perfil inicial</h1>
+            <p>Este perfil resume las evidencias observadas durante tu diagnóstico.</p>
+        </header>
+
+        <section class="perfil-panel perfil-sin-resultados" id="perfilSinResultados" aria-labelledby="tituloSinResultados">
+            <h2 id="tituloSinResultados">Aún no tenemos resultados suficientes para construir tu perfil.</h2>
+            <p>Completa los ocho desafíos para ver tus indicadores iniciales.</p>
+            <a class="btn-primary" href="/diagnostico">Realizar diagnóstico</a>
+        </section>
+
+        <div class="perfil-contenido" id="perfilResultados" hidden>
+            <section class="perfil-panel" aria-labelledby="tituloHabilidades">
+                <h2 id="tituloHabilidades">Indicadores iniciales de habilidades</h2>
+                <p class="perfil-aclaracion">Los indicadores representan tu desempeño en esta misión y sirven para orientar tu ruta de fortalecimiento.</p>
+                <ul class="perfil-habilidades" id="perfilHabilidades"></ul>
+                <a class="btn-primary perfil-ruta" href="/ruta">Ver mi ruta personalizada →</a>
+            </section>
+
+            <div class="perfil-lateral">
+                <section class="perfil-panel perfil-nia" aria-labelledby="tituloNiaPerfil">
+                    <div>
+                        <h2 id="tituloNiaPerfil">Lectura de NIA</h2>
+                        <p id="perfilFortaleza"></p>
+                        <p id="perfilPrioridad"></p>
+                        <button class="perfil-voz" id="perfilEscucharNia" type="button" hidden>
+                            Escuchar análisis de NIA
+                        </button>
+                    </div>
+                    <img src="/img/nia.png" alt="NIA, asistente virtual de Misión IA">
+                </section>
+
+                <section class="perfil-panel perfil-marcador" aria-labelledby="tituloMarcadorPerfil">
+                    <h2 id="tituloMarcadorPerfil">Marcador del juego</h2>
+                    <dl>
+                        <div><dt>Respuestas correctas</dt><dd id="perfilAciertos"></dd></div>
+                        <div><dt>Puntaje</dt><dd id="perfilPuntaje"></dd></div>
+                        <div><dt>Mejor racha</dt><dd id="perfilRacha"></dd></div>
+                    </dl>
+                    <p>El marcador se calcula por separado de los indicadores de habilidades.</p>
+                    <a class="perfil-revisar" href="/diagnostico?revisar=1">← Revisar mis respuestas</a>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

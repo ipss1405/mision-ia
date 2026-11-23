@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Misión IA</title>
+
+    <link rel="stylesheet"
+          href="/css/app.css">
+</head>
+
+<body class="paginainicio">
+
+    <header class="inicio-cabecera">
+        <a class="hero-panel-docente" href="/admin/desafios">Panel docente</a>
+    </header>
+
+    <main class="hero">
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <section class="hero-content">
+
+            <p class="eyebrow">APRENDIZAJE + IA + AUTONOMÍA</p>
+
+            <h1>
+                Misión IA
+            </h1>
+
+            <p class="hero-text">
+                Aprende a utilizar la inteligencia artificial
+                sin dejar de pensar por ti mismo.
+            </p>
+
+            <a href="/diagnostico"
+               class="btn-primary">
+
+                Comenzar misión
+
+            </a>
+
+        </section>
+
+
+        <!-- NIA -->
+        <section class="nia-zone">
+
+            <div class="nia-personaje">
+
+                <img
+                    src="/img/nia.png"
+                    alt="NIA, asistente virtual de Misión IA">
+
+            </div>
+
+
+            <div class="nia-message">
+
+                <strong>
+                    Hola, soy NIA ✨
+                </strong>
+
+                <p>
+                    Te acompañaré a descubrir cómo utilizas
+                    la inteligencia artificial y qué habilidades
+                    puedes fortalecer.
+                </p>
+
+                <button type="button" class="hero-voz" id="escucharPresentacionNia" hidden>
+                    <span aria-hidden="true">🔊</span> Escuchar presentación
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/js/nia-voz.js"></script>
+    <script>
+        if ("speechSynthesis" in window) {
+            const botonPresentacion = document.getElementById("escucharPresentacionNia");
+            botonPresentacion.addEventListener("click", () => {
+                hablarNia("Hola, soy NIA, tu asistente en Misión IA. Te acompañaré durante una serie de desafíos para descubrir cómo utilizas la inteligencia artificial y qué habilidades puedes fortalecer. Cuando estés listo, comienza tu misión.");
+            });
+            botonPresentacion.hidden = false;
+        }
+    </script>
+
+</body>
+
+</html>

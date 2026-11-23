@@ -1,0 +1,11 @@
+HELP.md
+target/
+
+# Base H2 de demostración
+/data/*
+!/data/misionia.mv.db
+
+# Respaldo privado de la base H2
+/respaldo-h2-antes-limpieza/
+
+.mvn/wrapper/maven-wrapper.jar

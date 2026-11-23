@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Banco de desafíos | Misión IA</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="admin-layout" aria-labelledby="tituloAdmin">
+    <header class="admin-cabecera">
+        <div>
+            <p class="eyebrow">Misión IA · Administración</p>
+            <h1 id="tituloAdmin">Banco de desafíos</h1>
+            <p>El diagnóstico usa los desafíos activos y publicados según su orden asignado.</p>
+        </div>
+        <a class="btn-primary" th:href="@{/admin/desafios/nuevo}">+ Nuevo desafío</a>
+    </header>
+
+    <p th:if="${mensaje}" th:text="${mensaje}" class="admin-aviso" role="status"></p>
+    <p th:if="${error}" th:text="${error}" class="admin-aviso admin-error" role="alert"></p>
+
+    <section class="admin-panel" aria-label="Desafíos registrados">
+        <p th:if="${desafios.isEmpty()}" class="admin-vacio">Aún no hay desafíos registrados.</p>
+        <div th:unless="${desafios.isEmpty()}" class="admin-tabla-contenedor" tabindex="0"
+             role="region" aria-label="Tabla de desafíos">
+            <table class="admin-tabla">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Habilidad principal</th>
+                    <th scope="col">Publicación y estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="desafio : ${desafios}">
+                    <td th:text="${desafio.id}"></td>
+                    <th scope="row">
+                        <a th:href="@{/admin/desafios/{id}(id=${desafio.id})}" th:text="${desafio.titulo}"></a>
+                    </th>
+                    <td th:text="${desafio.habilidadPrincipal.etiqueta}"></td>
+                    <td>
+                        <div class="admin-estados">
+                            <span class="admin-estado" th:classappend="${desafio.publicadoDiagnostico} ? ' admin-activo' : ''"
+                                  th:text="${desafio.publicadoDiagnostico} ? |Publicado · ${desafio.ordenDiagnostico}| : 'No publicado'"></span>
+                            <span class="admin-estado" th:classappend="${desafio.activo} ? ' admin-activo' : ''"
+                                  th:text="${desafio.activo} ? 'Activo' : 'Inactivo'"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="admin-acciones">
+                            <a class="admin-boton" th:href="@{/admin/desafios/{id}(id=${desafio.id})}"
+                               th:aria-label="|Ver ${desafio.titulo}|">Ver</a>
+                            <a class="admin-boton" th:href="@{/admin/desafios/{id}/editar(id=${desafio.id})}"
+                               th:aria-label="|Editar ${desafio.titulo}|">Editar</a>
+                            <form method="post" th:action="@{/admin/desafios/{id}/estado(id=${desafio.id})}">
+                                <button class="admin-boton" type="submit" name="activo"
+                                        th:value="${!desafio.activo}"
+                                        th:text="${desafio.activo} ? 'Desactivar' : 'Reactivar'"></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <a class="admin-volver" th:href="@{/}">← Volver a Misión IA</a>
+</main>
+</body>
+</html>
