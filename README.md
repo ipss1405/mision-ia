@@ -55,7 +55,7 @@ NIA significa **Navegante de Inteligencia y Autonomía**. Acompaña los desafío
 El acceso **Panel docente** de la portada abre el banco en `/admin/desafios`. Allí se pueden listar, crear, ver, editar, desactivar y reactivar desafíos. **Desactivar** aplica una desactivación lógica. El desafío permanece almacenado en H2 con su ID y sus datos, y puede reactivarse desde el Panel docente.
 
 - **Activo** y **Publicado** son estados distintos. Un desafío puede estar activo y permanecer sin publicar. Solo los desafíos activos y publicados se incluyen en los nuevos intentos.
-- El diagnóstico admite una cantidad variable de misiones. El docente puede incorporar nuevos desafíos al banco y hacerlos participar en nuevos intentos al publicarlos y activarlos. Al publicar debe asignar un orden entero positivo y único entre los desafíos publicados.
+- Las ocho misiones de la base de demostración son la configuración actual. El docente puede ampliar el diagnóstico al publicar y activar nuevos desafíos. Al publicar debe asignar un orden entero positivo y único entre los desafíos publicados.
 - La cantidad de misiones depende del banco activo al empezar el intento. Al desactivar un desafío, este deja de aparecer en nuevos intentos, las misiones visibles se renumeran consecutivamente y el orden interno se conserva. Al reactivarlo, vuelve a su posición relativa en los nuevos intentos.
 - Si no quedan desafíos activos y publicados, el diagnóstico informa que no hay misiones disponibles.
 
