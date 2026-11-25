@@ -48,7 +48,7 @@ async function iniciarRuta() {
     const alcance = conEvidencia.length === indicadores.length ? "los cinco indicadores" : "las habilidades con evidencia";
 
     document.getElementById("rutaPrioridad").textContent = habilidadRuta.nombre;
-    const porcentajeGeneral = Math.round(respuestasCorrectas * 100 / respuestas.length);
+    const porcentajeGeneral = formatearPorcentajeGeneral(respuestasCorrectas, respuestas.length);
     document.getElementById("rutaResultadoGeneral").textContent =
         `${respuestasCorrectas} de ${respuestas.length} · ${porcentajeGeneral} %`;
     document.getElementById("rutaEtiquetaIndicador").textContent = `Indicador en ${habilidadRuta.nombre}:`;

@@ -22,7 +22,7 @@
 
         <section class="perfil-panel perfil-sin-resultados" id="perfilSinResultados" aria-labelledby="tituloSinResultados">
             <h2 id="tituloSinResultados">Aún no tenemos resultados suficientes para construir tu perfil.</h2>
-            <p>Completa los ocho desafíos para ver tus indicadores iniciales.</p>
+            <p>Completa el diagnóstico para ver tus indicadores iniciales.</p>
             <a class="btn-primary" href="/diagnostico">Realizar diagnóstico</a>
         </section>
 
@@ -30,7 +30,12 @@
             <section class="perfil-panel" aria-labelledby="tituloHabilidades">
                 <h2 id="tituloHabilidades">Indicadores iniciales de habilidades</h2>
                 <p class="perfil-aclaracion">Los indicadores representan tu desempeño en esta misión y sirven para orientar tu ruta de fortalecimiento.</p>
-                <ul class="perfil-habilidades" id="perfilHabilidades"></ul>
+                <ul class="perfil-habilidades" id="perfilHabilidades">
+                    <li class="perfil-coleccion" id="perfilColeccion" aria-labelledby="tituloPerfilGuardianes" hidden>
+                        <h3 id="tituloPerfilGuardianes">Mis guardianes</h3>
+                        <ul class="perfil-guardianes" id="perfilGuardianes"></ul>
+                    </li>
+                </ul>
                 <a class="btn-primary perfil-ruta" href="/ruta">Ver mi ruta personalizada →</a>
             </section>
 
@@ -48,13 +53,19 @@
                 </section>
 
                 <section class="perfil-panel perfil-marcador" aria-labelledby="tituloMarcadorPerfil">
-                    <h2 id="tituloMarcadorPerfil">Marcador del juego</h2>
+                    <div class="perfil-marcador-cabecera">
+                        <h2 id="tituloMarcadorPerfil">Marcador del juego</h2>
+                        <div class="perfil-trofeo" id="perfilTrofeo" hidden>
+                            <span aria-hidden="true">🏅</span>
+                            <span id="perfilTrofeoNombre"></span>
+                            <strong id="perfilTrofeoPorcentaje"></strong>
+                        </div>
+                    </div>
                     <dl>
                         <div><dt>Respuestas correctas</dt><dd id="perfilAciertos"></dd></div>
-                        <div><dt>Puntaje</dt><dd id="perfilPuntaje"></dd></div>
+                        <div><dt>Puntos de juego</dt><dd id="perfilPuntaje"></dd></div>
                         <div><dt>Mejor racha</dt><dd id="perfilRacha"></dd></div>
                     </dl>
-                    <p>El marcador se calcula por separado de los indicadores de habilidades.</p>
                     <a class="perfil-revisar" href="/diagnostico?revisar=1">← Revisar mis respuestas</a>
                 </section>
             </div>

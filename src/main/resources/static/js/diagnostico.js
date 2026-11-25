@@ -7,6 +7,7 @@ const progresoDiagnostico = document.getElementById("progresoDiagnostico");
 const mensajeNia = document.querySelector(".nia-message");
 const btnEscucharNia = document.getElementById("btnEscucharNia");
 const PUNTOS_POR_ACIERTO = 350;
+const GUARDIANES = ["Pixel", "Lumi", "Chispa"];
 let intentoId;
 
 // El orden fija el formato visual y la referencia metodológica del perfil.
@@ -79,6 +80,7 @@ function adaptarDesafio(datos, indice) {
         ...presentacion,
         orden: datos.orden,
         numero: indice + 1,
+        puntaje: datos.puntaje,
         etiqueta: textoSeguro(datos.titulo),
         titulo: textoSeguro(titulo),
         pregunta: textoSeguro(pregunta),
@@ -301,7 +303,7 @@ function actualizarMarcador() {
         }
 
         if (respuesta === desafios[indice].correcta) {
-            puntos += PUNTOS_POR_ACIERTO;
+            puntos += desafios[indice].puntaje;
             racha++;
         } else {
             racha = 0;
@@ -342,7 +344,49 @@ function animarMision() {
     veloDiagnostico.animate([{ opacity: 0 }, { opacity: 1 }], transicion);
 }
 
+let miniSplash;
+let temporizadorMiniSplash;
+
+function cerrarMiniSplash(devolverFoco = false) {
+    if (!miniSplash) {
+        return;
+    }
+
+    clearTimeout(temporizadorMiniSplash);
+    const focoEnCierre = miniSplash.contains(document.activeElement);
+    miniSplash.remove();
+    miniSplash = null;
+    if (devolverFoco && focoEnCierre) {
+        document.getElementById("feedbackDiagnostico").focus({ preventScroll: true });
+    }
+}
+
+function mostrarMiniSplash(desafio, acierto) {
+    const guardian = GUARDIANES[(desafio.numero - 1) % GUARDIANES.length];
+    const titulo = acierto ? "¡MISIÓN SUPERADA!" : "¡Ánimo!";
+    const mensaje = acierto
+        ? `<p class="mision-splash-puntos">¡Ganaste ${desafio.puntaje} puntos!</p><p>¡Excelente decisión!</p>`
+        : "<p>Esta vez no sumaste puntos, pero aprendiste algo nuevo. ¡Sigamos!</p>";
+
+    miniSplash = document.createElement("div");
+    miniSplash.className = acierto ? "mision-splash es-celebracion" : "mision-splash";
+    miniSplash.innerHTML = `
+        <div class="mision-splash-panel">
+            <button type="button" class="mision-splash-cierre" aria-label="Cerrar aviso">×</button>
+            <img src="/img/${guardian.toLowerCase()}.webp" alt="" width="70" height="70">
+            <div role="status">
+                <strong>${titulo}</strong>
+                ${mensaje}
+            </div>
+        </div>
+    `;
+    miniSplash.querySelector("button").addEventListener("click", () => cerrarMiniSplash(true));
+    document.body.append(miniSplash);
+    temporizadorMiniSplash = setTimeout(() => cerrarMiniSplash(true), 2000);
+}
+
 function mostrarDesafio(enfocar = false) {
+    cerrarMiniSplash();
     const desafio = desafios[desafioActual];
     const esUltimo = desafio.numero === desafios.length;
     const contenedores = {
@@ -398,8 +442,8 @@ function mostrarDesafio(enfocar = false) {
         const ultimoError = respuestas.slice(0, desafioActual + 1)
             .findLastIndex((opcion, indice) => opcion !== desafios[indice].correcta);
         const resultado = acierto
-            ? `+${PUNTOS_POR_ACIERTO} puntos · Racha x${desafioActual - ultimoError}`
-            : "+0 puntos · Racha x0";
+            ? `+${desafio.puntaje} puntos · Racha x${desafioActual - ultimoError}`
+            : "Racha x0";
 
         feedback.classList.add(acierto ? "es-acierto" : "es-error");
         const explicacion = acierto ? desafio.explicacion : (desafio.explicacionError ?? desafio.explicacion);
@@ -448,6 +492,7 @@ function mostrarDesafio(enfocar = false) {
                 actualizarMarcador();
                 mostrarProgreso(desafio.numero);
                 mostrarRespuesta(respuesta, true);
+                mostrarMiniSplash(desafio, respuesta === desafio.correcta);
             });
         });
     }
@@ -465,6 +510,7 @@ function mostrarDesafio(enfocar = false) {
         }
 
         if (esUltimo) {
+            cerrarMiniSplash();
             abrirPerfil();
         } else {
             desafioActual++;
