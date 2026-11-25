@@ -28,15 +28,59 @@ function mostrarMarcadorPerfil({ respuestasCorrectas, respuestas, puntajeJuego, 
     document.getElementById("perfilRacha").textContent = `x${mejorRacha}`;
 }
 
+function mostrarLogrosPerfil({ respuestasCorrectas, respuestas, indicadores }) {
+    const total = respuestas.length;
+    if (total === 0 || !Number.isInteger(respuestasCorrectas) ||
+        respuestasCorrectas < 0 || respuestasCorrectas > total) {
+        return;
+    }
+
+    const perfecto = respuestasCorrectas === total;
+    const plata = respuestasCorrectas * 10 >= total * 7;
+    const trofeo = perfecto ? "Oro" : plata ? "Plata" : "Bronce";
+    const porcentaje = formatearPorcentajeGeneral(respuestasCorrectas, total);
+    const tarjeta = document.getElementById("perfilTrofeo");
+    tarjeta.dataset.trofeo = trofeo.toLowerCase();
+    document.getElementById("perfilTrofeoNombre").textContent = `Trofeo de ${trofeo}`;
+    document.getElementById("perfilTrofeoPorcentaje").textContent = `${porcentaje} %`;
+
+    const verificacion = indicadores.find(indicador => indicador.id === "verificacion")?.porcentaje;
+    const guardianes = [
+        { nombre: "Pixel", desbloqueado: true, condicion: "Completa el diagnóstico." },
+        { nombre: "Lumi", desbloqueado: typeof verificacion === "number" && verificacion >= 70,
+            condicion: "Alcanza al menos 70 % en Verificación de información." },
+        { nombre: "Chispa", desbloqueado: perfecto, condicion: "Acierta en todas las misiones del diagnóstico." }
+    ];
+
+    document.getElementById("perfilGuardianes").innerHTML = guardianes.map(({ nombre, desbloqueado, condicion }) => `
+        <li class="perfil-guardian ${desbloqueado ? "es-desbloqueado" : ""}">
+            <details>
+                <summary aria-label="${nombre}, ${desbloqueado ? "Desbloqueado" : "Bloqueado"}. Consultar requisito">
+                    <img src="/img/${nombre.toLowerCase()}.webp" alt="" width="60" height="60">
+                    <strong>${nombre}</strong>
+                    <span class="perfil-guardian-estado"><span aria-hidden="true">${desbloqueado ? "✦" : "🔒"}</span>
+                        ${desbloqueado ? "Desbloqueado" : "Bloqueado"}</span>
+                    <span class="perfil-guardian-info" aria-hidden="true">i</span>
+                </summary>
+                <p>${condicion}</p>
+            </details>
+        </li>
+    `).join("");
+
+    tarjeta.hidden = false;
+    document.getElementById("perfilColeccion").hidden = false;
+}
+
 async function iniciarPerfil() {
-    const resultado = await consultarResultadoIntento();
-    if (!resultado) {
+    const intentoId = leerIntentoActual();
+    const resultado = await consultarResultadoIntento(intentoId);
+    if (!resultado || intentoId !== leerIntentoActual()) {
         return;
     }
 
     const { indicadores } = resultado;
-    document.getElementById("perfilHabilidades").innerHTML = indicadores.map(({ nombre, porcentaje, nivel }) => `
-        <li class="perfil-habilidad">
+    const tarjetas = indicadores.map(({ id, nombre, porcentaje, nivel }) => `
+        <li class="perfil-habilidad" data-habilidad="${id}">
             <h3>${nombre}</h3>
             <div class="perfil-indicador">
                 ${porcentaje === null ? "" : `<strong>${porcentaje} %</strong>`}
@@ -46,8 +90,11 @@ async function iniciarPerfil() {
         </li>
     `).join("");
 
+    document.getElementById("perfilColeccion").insertAdjacentHTML("beforebegin", tarjetas);
+
     mostrarLecturaNia(resultado);
     mostrarMarcadorPerfil(resultado);
+    mostrarLogrosPerfil(resultado);
     if ("speechSynthesis" in window) {
         const botonVoz = document.getElementById("perfilEscucharNia");
         botonVoz.addEventListener("click", () => {

@@ -530,6 +530,86 @@ body.paginainicio {
     line-height: 1.4;
 }
 
+.mision-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    pointer-events: none;
+}
+
+.mision-splash-panel {
+    --splash-acento: #c6a7ff;
+    position: relative;
+    width: min(100%, 320px);
+    padding: 12px 28px 17px;
+    border: 1px solid var(--splash-acento);
+    border-radius: 16px;
+    background: rgba(8, 17, 31, .96);
+    box-shadow: 0 0 28px color-mix(in srgb, var(--splash-acento) 28%, transparent);
+    text-align: center;
+}
+
+.mision-splash.es-celebracion .mision-splash-panel {
+    --splash-acento: var(--cyan);
+}
+
+.mision-splash-panel img {
+    object-fit: contain;
+}
+
+.mision-splash-panel strong {
+    display: block;
+    color: var(--splash-acento);
+    font-size: 1rem;
+    letter-spacing: .06em;
+}
+
+.mision-splash-panel p {
+    margin: 4px 0 0;
+    font-size: .9rem;
+    line-height: 1.4;
+}
+
+.mision-splash-panel .mision-splash-puntos {
+    color: #ffd481;
+    font-weight: 700;
+}
+
+.mision-splash-cierre {
+    position: absolute;
+    inset-block-start: 3px;
+    inset-inline-end: 3px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-main);
+    font-size: 1.4rem;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.mision-splash-cierre:is(:hover, :focus-visible) {
+    background: #22314a;
+    outline: 2px solid var(--splash-acento);
+    outline-offset: -3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .mision-splash-panel {
+        animation: mision-splash-entrada .24s ease-out both;
+    }
+}
+
+@keyframes mision-splash-entrada {
+    from { opacity: 0; transform: translateY(5px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .mision-resultado,
 .mision-continuar {
     display: flex;
@@ -1413,6 +1493,154 @@ body:has(.perfil-layout) {
     line-height: 1.35;
 }
 
+.perfil-marcador-cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+}
+
+.perfil-trofeo:not([hidden]) {
+    --medalla: #f4af82;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 7px;
+    border: 1px solid color-mix(in srgb, var(--medalla) 48%, transparent);
+    border-radius: 999px;
+    background: #0b1728;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--medalla) 18%, transparent);
+    color: var(--medalla);
+    font-size: .75rem;
+}
+
+.perfil-trofeo[data-trofeo="plata"] { --medalla: #d6deed; }
+.perfil-trofeo[data-trofeo="oro"] { --medalla: #ffd481; }
+
+.perfil-habilidades > li.perfil-coleccion {
+    gap: 5px;
+    padding-block: 8px;
+    border-color: #8b5cf665;
+    background: linear-gradient(150deg, #8b5cf61c, #08111fa6 72%);
+}
+
+.perfil-coleccion h3 {
+    margin: 0;
+    font-size: .9rem;
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.perfil-guardianes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.perfil-guardian {
+    min-width: 0;
+    border: 1px solid #8b5cf665;
+    border-radius: 10px;
+    background: #0b1728;
+    text-align: center;
+}
+
+.perfil-guardian.es-desbloqueado {
+    border-color: #26e6ff65;
+    box-shadow: inset 0 0 12px #26e6ff12;
+}
+
+.perfil-guardian summary {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1px;
+    padding: 4px 2px;
+    border-radius: 9px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.perfil-guardian summary::-webkit-details-marker {
+    display: none;
+}
+
+.perfil-guardian summary:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
+}
+
+.perfil-guardian img {
+    max-width: 100%;
+    object-fit: contain;
+    filter: grayscale(1) brightness(.72);
+}
+
+.perfil-guardian.es-desbloqueado img {
+    filter: drop-shadow(0 0 6px #26e6ff55);
+}
+
+.perfil-guardian strong {
+    font-size: .8rem;
+}
+
+.perfil-guardian-estado {
+    color: var(--text-soft);
+    font-size: .66rem;
+    overflow-wrap: anywhere;
+}
+
+.perfil-guardian-info {
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-end: 4px;
+    display: grid;
+    place-items: center;
+    width: 15px;
+    aspect-ratio: 1;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: #0b1728;
+    color: #cbb9ff;
+    font-size: .68rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.perfil-guardian details[open] .perfil-guardian-info {
+    color: var(--cyan);
+}
+
+.perfil-guardian.es-desbloqueado .perfil-guardian-estado {
+    color: var(--cyan);
+}
+
+.perfil-coleccion .perfil-guardian p {
+    margin: 0;
+    padding: 4px;
+    font-size: .72rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .perfil-trofeo:not([hidden]),
+    .perfil-coleccion:not([hidden]) {
+        animation: perfil-logros-entrada .28s ease-out both;
+    }
+}
+
+@keyframes perfil-logros-entrada {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .perfil-habilidades {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1422,7 +1650,7 @@ body:has(.perfil-layout) {
     list-style: none;
 }
 
-.perfil-habilidad {
+:is(.perfil-habilidad, .perfil-coleccion:not([hidden])) {
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -1446,6 +1674,10 @@ body:has(.perfil-layout) {
     align-items: center;
     gap: 4px 10px;
     margin-top: auto;
+}
+
+.perfil-habilidad[data-habilidad="autonomia"] .perfil-indicador {
+    margin-top: 0;
 }
 
 .perfil-indicador strong {
@@ -1527,8 +1759,8 @@ body:has(.perfil-layout) {
 
 .perfil-marcador dl {
     display: grid;
-    gap: 8px;
-    margin: 12px 0;
+    gap: 5px;
+    margin: 10px 0 0;
 }
 
 .perfil-marcador dl div {
@@ -1557,6 +1789,10 @@ body:has(.perfil-layout) {
     margin-top: 8px;
     color: var(--cyan);
     text-underline-offset: 4px;
+}
+
+.perfil-marcador .perfil-revisar {
+    margin-top: 2px;
 }
 
 .perfil-sin-resultados .btn-primary {
@@ -2086,4 +2322,213 @@ body:has(.admin-layout) {
     .perfil-nia {
         grid-template-columns: minmax(0, 1fr) 56px;
     }
+}
+
+/* Portada de Misión IA */
+.paginainicio {
+    background:
+        radial-gradient(ellipse at 80% 36%, #291b4a 0%, transparent 46%),
+        radial-gradient(ellipse at 12% 12%, #103043 0%, transparent 52%),
+        var(--bg-dark);
+}
+
+.portada-aventura {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(22px, 5vw, 72px);
+}
+
+.portada-aventura .eyebrow {
+    text-transform: uppercase;
+}
+
+.portada-aventura h1 {
+    color: var(--text-main);
+    max-width: 12ch;
+    font-size: clamp(2.65rem, 5.9vw, 5.4rem);
+    line-height: 1;
+    letter-spacing: -.055em;
+    text-wrap: balance;
+}
+
+.portada-aventura .hero-text {
+    max-width: 39ch;
+    margin-bottom: 18px;
+    font-size: clamp(1rem, 1.7vw, 1.22rem);
+}
+
+.portada-presentacion {
+    margin: 0 0 22px;
+    font-size: .95rem;
+    line-height: 1.55;
+}
+
+.portada-presentacion strong {
+    color: var(--cyan);
+}
+
+.portada-acciones {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.portada-acciones .hero-voz {
+    margin: 0;
+    padding-inline: 13px;
+}
+
+.portada-pasos,
+.portada-guardianes {
+    padding: 0;
+    list-style: none;
+}
+
+.portada-pasos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 20px 0 0;
+}
+
+.portada-pasos li {
+    --acento: var(--cyan);
+    padding: 5px 10px;
+    border: 1px solid color-mix(in srgb, var(--acento) 40%, transparent);
+    border-radius: 999px;
+    color: var(--acento);
+    font-size: .76rem;
+    font-weight: 700;
+}
+
+.portada-pasos li:nth-child(2) { --acento: #d0b6ff; }
+.portada-pasos li:nth-child(3) { --acento: #ffd481; }
+
+.portada-elenco {
+    text-align: center;
+}
+
+.portada-nia {
+    display: grid;
+    place-items: center;
+    background: radial-gradient(ellipse closest-side, #7454cb56, transparent);
+}
+
+.portada-nia img {
+    display: block;
+    width: min(65%, 290px);
+    height: auto;
+    filter: drop-shadow(0 0 16px #73caff55);
+}
+
+.portada-elenco h2 {
+    margin: 8px 0 10px;
+    color: #dfd1ff;
+    font-size: .82rem;
+    letter-spacing: .08em;
+}
+
+.portada-guardianes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(5px, 1vw, 12px);
+    margin: 0;
+}
+
+.portada-guardianes li {
+    min-width: 0;
+    padding: 7px 3px 9px;
+    border: 1px solid color-mix(in srgb, var(--acento) 34%, transparent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--acento) 8%, var(--bg-dark));
+}
+
+.guardian-pixel { --acento: #75f2ff; }
+.guardian-lumi { --acento: #d1b5ff; }
+.guardian-chispa { --acento: #ffd481; }
+
+.portada-guardianes img {
+    display: block;
+    width: 100%;
+    height: clamp(58px, 8vw, 104px);
+    object-fit: contain;
+    filter: drop-shadow(0 0 7px color-mix(in srgb, var(--acento) 30%, transparent));
+}
+
+.portada-guardianes strong,
+.portada-guardianes span {
+    display: block;
+}
+
+.portada-guardianes strong {
+    color: var(--acento);
+    font-size: .88rem;
+}
+
+.portada-guardianes span {
+    margin-top: 2px;
+    color: var(--text-soft);
+    font-size: .75rem;
+}
+
+@media (hover: hover) {
+    .portada-guardianes li:hover {
+        border-color: var(--acento);
+        box-shadow: 0 0 18px color-mix(in srgb, var(--acento) 22%, transparent);
+    }
+
+    .portada-nia img:hover {
+        filter: drop-shadow(0 0 24px #73caff88);
+    }
+}
+
+@media (max-width: 800px) {
+    .portada-aventura {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 460px;
+    }
+
+    .portada-aventura h1 {
+        margin-inline: auto;
+    }
+
+    .portada-acciones,
+    .portada-pasos {
+        justify-content: center;
+    }
+
+    .portada-nia img {
+        width: min(60%, 220px);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .portada-guardianes li {
+        animation: portada-aparicion .65s ease-out both;
+        transition: box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .portada-guardianes li:nth-child(2) { animation-delay: .1s; }
+    .portada-guardianes li:nth-child(3) { animation-delay: .2s; }
+
+    .portada-nia img {
+        animation: portada-aparicion .7s ease-out both, portada-flotar 3s ease-in-out .7s 1;
+        transition: filter .2s ease;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portada-acciones .btn-primary {
+        transition: none;
+    }
+}
+
+@keyframes portada-aparicion {
+    from { opacity: 0; translate: 0 6px; }
+    to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes portada-flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }

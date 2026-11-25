@@ -44,7 +44,9 @@ Los indicadores resumen la evidencia obtenida en los desafíos del intento. Sirv
 
 **Inicio → Diagnóstico → Perfil inicial → Ruta de fortalecimiento o profundización**
 
-Desde la portada se inicia un nuevo diagnóstico. En cada misión, el estudiante selecciona una alternativa, recibe retroalimentación y puede consultar las respuestas previas con **Anterior**. El perfil resume el intento terminado y permite volver a revisar sus respuestas. La ruta ofrece recomendaciones para practicar por cuenta propia. Las recomendaciones son informativas y no se ejecutan dentro de la plataforma.
+La portada «¡Atrévete a pensar por ti!» presenta a NIA junto a los Guardianes del Conocimiento: Pixel, Lumi y Chispa. Desde allí se puede empezar la misión, escuchar la presentación de NIA bajo demanda o entrar al Panel docente. En cada misión, el estudiante selecciona una alternativa, recibe retroalimentación y puede consultar las respuestas previas con **Anterior**. El perfil resume el intento terminado y permite volver a revisar sus respuestas. La ruta ofrece recomendaciones para practicar por cuenta propia. Las recomendaciones son informativas y no se ejecutan dentro de la plataforma.
+
+Al responder aparece un mini-splash que se cierra automáticamente en unos dos segundos o al pulsar el cierre. En un acierto, un guardián muestra los puntos de esa misión. Ante un error, ofrece ánimo sin indicar puntos ganados. El aviso permite continuar y la explicación educativa de NIA sigue disponible.
 
 ## NIA
 
@@ -82,6 +84,18 @@ El backend calcula cada indicador dividiendo los puntos de evidencia obtenidos p
 | 70–100 % | Fortaleza inicial |
 | Sin evidencia suficiente | Ninguna misión participante aporta evidencia para esa habilidad. Se omite su porcentaje y queda fuera de la selección de fortaleza y prioridad. |
 
+### Trofeos y guardianes
+
+El perfil usa el resultado oficial del intento consultado por UUID. El perfil y la ruta muestran el entero más cercano para el porcentaje general. Si ese redondeo alcanza un umbral de trofeo aún pendiente, muestran los decimales necesarios para quedar por debajo. El trofeo aplica los umbrales a la proporción exacta de aciertos sobre el total real del intento.
+
+| Trofeo | Proporción de aciertos |
+| --- | --- |
+| Bronce | Menos de 70 % |
+| Plata | Desde 70 % y menos de 100 % |
+| Oro | 100 % |
+
+**Pixel** se desbloquea al completar el diagnóstico. **Lumi** requiere al menos 70 % en el indicador oficial de Verificación de información. **Chispa** requiere acertar todas las misiones. La colección está en el panel de habilidades y los requisitos se consultan mediante el icono de información. El mini-splash celebra una respuesta individual. Los logros del perfil corresponden al intento completo y no suman puntos extra.
+
 ## Ruta personalizada
 
 La ruta distingue el **resultado general**, calculado como aciertos sobre el total real de misiones del intento, del **indicador de la habilidad prioritaria**. También presenta la fortaleza inicial y tres recomendaciones relacionadas con la habilidad seleccionada.
@@ -105,9 +119,9 @@ Spring ejecuta `data.sql` después de inicializar JPA. La carga inicial inserta 
 
 Las tablas principales son `DESAFIO`, `INTENTO_DIAGNOSTICO`, `RESPUESTA_INTENTO` y `MISION_IA_MIGRACION`.
 
-### Estado de la base de demostración
+### Registro de la base de demostración
 
-- Se conservaron **3 intentos completos** de diagnóstico y **25 respuestas** asociadas.
+- La versión de demostración documentada conservaba **3 intentos completos** de diagnóstico y **25 respuestas** asociadas.
 - Hay **8 desafíos activos** que participan en el diagnóstico.
 - Hay **1 desafío adicional de prueba** en estado inactivo, utilizado para verificar el CRUD docente y la desactivación lógica.
 
@@ -142,7 +156,13 @@ En macOS o Linux, el comando equivalente es `./mvnw spring-boot:run`.
 
 El proyecto cuenta con un dashboard técnico HTML como apoyo para su presentación. Explica el funcionamiento de Misión IA, la arquitectura MVC, la estructura de carpetas, los comandos y las rutas de la aplicación. También cubre los flujos del estudiante y del docente, el perfil de habilidades, la ruta personalizada, la persistencia con JPA y H2, las pruebas, el diseño adaptable y la relación del proyecto con los criterios de evaluación.
 
+El repositorio GitHub contiene el código y los recursos. GitHub Pages publica el dashboard estático desde `docs/index.html`, que mantiene el mismo contenido que [el HTML original del dashboard](docs/Mision_IA_Dashboard_Tecnico_FINAL_v2.html). La aplicación interactiva se ejecuta localmente con Spring Boot y se abre en `http://localhost:8080`.
+
+Para preparar una entrega, selecciona los archivos aprobados por ruta con `git add -- <ruta-del-archivo>` y revisa `git diff --cached --name-status`. Deja fuera del próximo commit el cambio local de `data/misionia.mv.db`. La versión de demostración del archivo sigue bajo seguimiento.
+
 ## Pruebas y diseño adaptable
+
+### Prueba automatizada de Maven
 
 Ejecuta la prueba automatizada desde la raíz del proyecto:
 
@@ -150,9 +170,13 @@ Ejecuta la prueba automatizada desde la raíz del proyecto:
 .\mvnw.cmd test
 ```
 
-`MisionIaApplicationTests.contextLoads` comprueba que el contexto de Spring Boot se inicializa con H2 en memoria. Las verificaciones funcionales complementarias cubrieron el flujo del estudiante, la navegación, el CRUD docente, los intentos independientes, la activación y desactivación, y los diagnósticos con distinta cantidad de misiones. La voz bajo demanda también se comprobó con síntesis simulada.
+`MisionIaApplicationTests.contextLoads` comprueba que el contexto de Spring Boot se inicializa con H2 en memoria (`jdbc:h2:mem:misionia-test`).
 
-Las vistas principales se adaptan a escritorio y móvil. La prueba manual a **375 px** cubrió la portada, el diagnóstico, el perfil, la ruta personalizada y el Panel docente.
+### Verificaciones funcionales realizadas aparte
+
+La auditoría en Edge y Spring Boot con H2 en memoria cubrió la portada, el mini-splash y sus dos cierres, el perfil, la ruta, el CRUD docente, el guardado de resultados por UUID y diagnósticos de 8 y 10 misiones. Se probaron trofeos, guardianes bloqueados y desbloqueados, y la ausencia de premios sin un intento completo. La voz bajo demanda se comprobó con síntesis simulada.
+
+Las vistas principales se adaptan a escritorio y móvil. El perfil con trofeos y guardianes se comprobó a **1366, 375 y 320 px**, incluido el movimiento reducido. La prueba manual a **375 px** cubrió la portada, el diagnóstico, el perfil, la ruta personalizada y el Panel docente.
 
 - Las tarjetas y los contenidos se ajustaron al ancho sin desplazamiento horizontal.
 - Los textos y botones quedaron visibles, y la navegación se pudo utilizar.

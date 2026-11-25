@@ -19,64 +19,52 @@
         <a class="hero-panel-docente" href="/admin/desafios">Panel docente</a>
     </header>
 
-    <main class="hero">
+    <main class="hero portada-aventura">
+        <section class="hero-content" aria-labelledby="titulo-portada">
+            <p class="eyebrow">Misión IA</p>
+            <h1 id="titulo-portada">¡Atrévete a pensar por ti!</h1>
+            <p class="hero-text">La inteligencia artificial puede ayudarte a aprender, pero tu criterio es tu verdadero superpoder.</p>
 
-        <!-- CONTENIDO PRINCIPAL -->
-        <section class="hero-content">
+            <p class="portada-presentacion"><strong>Hola, soy NIA.</strong> Te acompañaré a descubrir cómo usas la IA y qué habilidades puedes fortalecer.</p>
 
-            <p class="eyebrow">APRENDIZAJE + IA + AUTONOMÍA</p>
-
-            <h1>
-                Misión IA
-            </h1>
-
-            <p class="hero-text">
-                Aprende a utilizar la inteligencia artificial
-                sin dejar de pensar por ti mismo.
-            </p>
-
-            <a href="/diagnostico"
-               class="btn-primary">
-
-                Comenzar misión
-
-            </a>
-
-        </section>
-
-
-        <!-- NIA -->
-        <section class="nia-zone">
-
-            <div class="nia-personaje">
-
-                <img
-                    src="/img/nia.png"
-                    alt="NIA, asistente virtual de Misión IA">
-
-            </div>
-
-
-            <div class="nia-message">
-
-                <strong>
-                    Hola, soy NIA ✨
-                </strong>
-
-                <p>
-                    Te acompañaré a descubrir cómo utilizas
-                    la inteligencia artificial y qué habilidades
-                    puedes fortalecer.
-                </p>
-
+            <div class="portada-acciones">
+                <a href="/diagnostico" class="btn-primary">Comenzar misión</a>
                 <button type="button" class="hero-voz" id="escucharPresentacionNia" hidden>
-                    <span aria-hidden="true">🔊</span> Escuchar presentación
+                    <span aria-hidden="true">♪</span> Escuchar presentación
                 </button>
-
             </div>
 
+            <ul class="portada-pasos" aria-label="Etapas de la aventura">
+                <li>Piensa</li>
+                <li>Juega</li>
+                <li>Desbloquea</li>
+            </ul>
         </section>
 
+        <section class="portada-elenco" aria-labelledby="titulo-guardianes">
+            <div class="portada-nia">
+                <img src="/img/nia.png" alt="NIA, asistente virtual de Misión IA">
+            </div>
+
+            <h2 id="titulo-guardianes">Guardianes del Conocimiento</h2>
+            <ul class="portada-guardianes">
+                <li class="guardian-pixel">
+                    <img src="/img/pixel.webp" alt="Gatito tecnológico cyan">
+                    <strong>Pixel</strong>
+                    <span>Curioso</span>
+                </li>
+                <li class="guardian-lumi">
+                    <img src="/img/lumi.webp" alt="Gatita tecnológica violeta">
+                    <strong>Lumi</strong>
+                    <span>Observadora</span>
+                </li>
+                <li class="guardian-chispa">
+                    <img src="/img/chispa.webp" alt="Gatito tecnológico dorado">
+                    <strong>Chispa</strong>
+                    <span>Alegre</span>
+                </li>
+            </ul>
+        </section>
     </main>
 
     <script src="/js/nia-voz.js"></script>
